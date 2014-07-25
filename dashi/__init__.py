@@ -384,7 +384,6 @@ class Dashi(object):
         """
         channel = None
         while 1:
-            print(connection)
             try:
                 if channel is None:
                     channel = connection.channel()
