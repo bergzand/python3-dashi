@@ -17,6 +17,7 @@ from kombu.entity import Queue, Exchange
 from .exceptions import DashiError, BadRequestError, NotFoundError, \
     UnknownOperationError, WriteConflictError
 from .util import Countdown, RetryBackoff
+import collections
 
 __version__ = '0.3.0'
 
@@ -473,7 +474,7 @@ class DashiConsumer(object):
             try:
                 op = str(body['op'])
                 args = body.get('args')
-            except Exception, e:
+            except Exception as e:
                 log.warn("Failed to interpret message body: %s", body,
                          exc_info=True)
                 raise BadRequestError("Invalid request: %s" % str(e))
@@ -490,7 +491,7 @@ class DashiConsumer(object):
 
             try:
                 ret = op_fun(**args)
-            except TypeError, e:
+            except TypeError as e:
                 log.exception("Type error with handler for %s:%s", self._name, op)
                 raise BadRequestError("Type error: %s" % str(e))
             except Exception:
@@ -544,7 +545,7 @@ class DashiConsumer(object):
                    traceback=tb), is_known
 
     def add_op(self, name, fun, sender_kwarg=None):
-        if not callable(fun):
+        if not isinstance(fun, collections.Callable):
             raise ValueError("operation function must be callable")
 
         self._ops[name] = _OpSpec(fun, sender_kwarg)

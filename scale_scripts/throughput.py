@@ -37,13 +37,13 @@ class DashiScaleReceiver(object):
     def final_msg(self):
         self.end_time = datetime.datetime.now()
         self.done = True
-        print "got final message"
+        print("got final message")
 
     def go(self):
         while not self.done:
             try:
                 self.dashi.consume(timeout=int(self.CFG.test.consume_timeout), count=int(self.CFG.test.consume_count))
-            except socket.timeout, ex:
+            except socket.timeout as ex:
                 pass
 
     def get_results(self):
@@ -79,7 +79,7 @@ class DashiScaleSender(object):
             if not self.done:
                 self.dashi.fire(self.CFG.test.receiver_name, "incoming", message=self.message)
                 self.message_count = self.message_count + 1
-        print "sending final message"
+        print("sending final message")
         self.dashi.fire(self.CFG.test.receiver_name, "final_msg")
 
     def timeout(self):
@@ -112,9 +112,9 @@ def main(argv):
         receiver.go()
         res = receiver.get_results()
 
-    print "JSON: %s" % (json.dumps(res))
+    print("JSON: %s" % (json.dumps(res)))
         
 if __name__ == '__main__':
     rc = main(sys.argv)
-    print "exit"
+    print("exit")
     sys.exit(rc)

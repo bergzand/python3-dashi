@@ -1,6 +1,7 @@
 import logging
 import threading
 import time
+import collections
 
 
 class Countdown(object):
@@ -65,7 +66,7 @@ class RetryBackoff(object):
 
 class LoopingCall(object):
     def __init__(self, fun, *args, **kwargs):
-        assert callable(fun)
+        assert isinstance(fun, collections.Callable)
         self.fun = fun
         self.args = args
         self.kwargs = kwargs

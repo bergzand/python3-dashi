@@ -19,7 +19,7 @@ class TalkConsole(object):
         sys.stdout.flush()
 
     def input(self):
-        line = raw_input(self._prompt)
+        line = input(self._prompt)
         return line.strip()
 
 
@@ -61,7 +61,7 @@ class DashiTalker(Thread):
         while not self.done:
             try:
                 self.dashi.consume(timeout=2)
-            except socket.timeout, ex:
+            except socket.timeout as ex:
                 pass
 
     def end(self):
@@ -76,8 +76,8 @@ def main(argv):
     console = TalkConsole()
     talker = DashiTalker(console, my_name)
     if len(argv) > 2:
-        print "request"
-        print argv[2]
+        print("request")
+        print(argv[2])
         talker.request_conversation(argv[2])
 
     talker.start()

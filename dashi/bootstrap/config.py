@@ -5,7 +5,7 @@ __license__ = 'Apache 2.0'
 
 import yaml
 
-from containers import DotDict, dict_merge
+from .containers import DotDict, dict_merge
 
 class Config(object):
     """
@@ -41,7 +41,7 @@ class Config(object):
             except IOError:
                 # TODO: Log this correctly once logging is implemented
                 if not path.endswith('.local.yml'):
-                    print 'CONFIG NOT FOUND: %s' % (path)
+                    print('CONFIG NOT FOUND: %s' % (path))
 
         self.data = data
 

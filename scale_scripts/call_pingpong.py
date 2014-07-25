@@ -29,7 +29,7 @@ class DashiScaleCallPonger(object):
         return 1
     
     def final_msg(self):
-	print "callee receviing final message"
+	print("callee receviing final message")
         self.done = True
         sys.exit(0)
 
@@ -37,7 +37,7 @@ class DashiScaleCallPonger(object):
         while not self.done:
             try:
                 self.dashi.consume()
-            except socket.timeout, ex:
+            except socket.timeout as ex:
                 pass
 
 
@@ -60,9 +60,9 @@ class DashiScaleCallPinger(object):
             try:
                 self.dashi.call(self.CFG.test.ponger_name, "ping")
 		self.message_count = self.message_count + 1
-            except socket.timeout, ex:
+            except socket.timeout as ex:
                 pass
-	print "called sending final message"
+	print("called sending final message")
         self.dashi.fire(self.CFG.test.ponger_name, "final_msg")
 
     def timeout(self):
@@ -88,7 +88,7 @@ def main(argv):
         sender = DashiScaleCallPinger(CFG)
         sender.go()
         res = sender.get_results()
-        print "JSON: %s" % (json.dumps(res))
+        print("JSON: %s" % (json.dumps(res)))
     else:
         receiver = DashiScaleCallPonger(CFG)
         receiver.go()
@@ -97,5 +97,5 @@ def main(argv):
         
 if __name__ == '__main__':
     rc = main(sys.argv)
-    print "exit"
+    print("exit")
     sys.exit(rc)

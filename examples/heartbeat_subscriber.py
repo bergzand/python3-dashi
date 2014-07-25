@@ -30,7 +30,7 @@ class HeartbeatSubscriber(object):
         consumer.join()
 
     def heartbeat(self, beat):
-        print "Got heartbeat: %s" % beat
+        print("Got heartbeat: %s" % beat)
 
 if __name__ == '__main__':
     HeartbeatSubscriber().start()

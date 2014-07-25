@@ -15,7 +15,7 @@ def main(argv):
             if c in j:
                 sys.stdout.write(str(j[c]))
             sys.stdout.write("|")
-        print ""
+        print("")
 
 
 if __name__ == '__main__':

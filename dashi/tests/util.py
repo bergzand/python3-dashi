@@ -44,7 +44,7 @@ class SocatProxy(object):
         try:
             self.process = subprocess.Popen(args=["socat", src_arg, dest_arg],
                 preexec_fn=os.setpgrp)
-        except OSError, e:
+        except OSError as e:
             if e.errno == errno.ENOENT:
                 raise unittest.SkipTest("socat executable not found")
 
@@ -53,7 +53,7 @@ class SocatProxy(object):
             log.debug("Stopping socat TCP proxy %s -> %s", self.port, self.address)
             try:
                 os.killpg(self.process.pid, signal.SIGKILL)
-            except OSError, e:
+            except OSError as e:
                 if e.errno != errno.ESRCH:
                     raise
             self.process.wait()

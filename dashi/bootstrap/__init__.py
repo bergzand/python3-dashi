@@ -14,8 +14,8 @@ import logging.config
 from copy import copy
 
 from dashi import DashiConnection
-from config import Config
-from containers import dict_merge, DotDict
+from .config import Config
+from .containers import dict_merge, DotDict
 
 DEFAULT_CONFIG_FILES = [
     'config/service.yml',
@@ -42,7 +42,7 @@ def configure(config_files=DEFAULT_CONFIG_FILES,
 
     try:
         # Make log directory if it doesn't exist
-        for handler in CFG.logging.get('handlers', {}).itervalues():
+        for handler in CFG.logging.get('handlers', {}).values():
             if 'filename' in handler:
                 log_dir = os.path.dirname(handler['filename'])
                 if not os.path.exists(log_dir):
@@ -53,10 +53,10 @@ def configure(config_files=DEFAULT_CONFIG_FILES,
         except AttributeError:
             msg = '"logging.config.dictConfig" doesn\'t seem to be supported '
             msg += 'in your python. Try Python 2.7.'
-            print >> sys.stderr, msg
+            print(msg, file=sys.stderr)
             raise
     except AttributeError:
-        print >> sys.stderr, "No logging configured, continuing without."
+        print("No logging configured, continuing without.", file=sys.stderr)
         pass
 
     return CFG
@@ -163,7 +163,8 @@ def _start_methods_gevent(methods=[], join=True):
     if join:
         try:
             gevent.joinall(greenlets)
-        except KeyboardInterrupt, gevent.GreenletExit:
+        except KeyboardInterrupt as xxx_todo_changeme:
+            gevent.GreenletExit = xxx_todo_changeme
             gevent.killall(greenlets)
     else:
         return greenlets
@@ -243,7 +244,7 @@ def get_logger(name, CFG=None):
 
     if CFG:
         # Make log directory if it doesn't exist
-        for handler in CFG.get('handlers', {}).itervalues():
+        for handler in CFG.get('handlers', {}).values():
             if 'filename' in handler:
                 log_dir = os.path.dirname(handler['filename'])
                 if not os.path.exists(log_dir):
@@ -252,7 +253,7 @@ def get_logger(name, CFG=None):
             #TODO: This requires python 2.7
             logging.config.dictConfig(CFG)
         except AttributeError:
-            print >> sys.stderr, '"logging.config.dictConfig" doesn\'t seem to be supported in your python'
+            print('"logging.config.dictConfig" doesn\'t seem to be supported in your python', file=sys.stderr)
             raise
 
     return logger

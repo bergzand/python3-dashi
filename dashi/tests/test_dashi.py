@@ -15,6 +15,7 @@ import dashi
 import dashi.util
 from dashi.tests.util import who_is_calling, SocatProxy, get_queue_info
 from dashi.exceptions import NotFoundError
+import collections
 
 log = logging.getLogger(__name__)
 
@@ -92,7 +93,7 @@ class TestReceiver(object):
 
         if opname in self.reply_with:
             reply_with = self.reply_with[opname]
-            if callable(reply_with):
+            if isinstance(reply_with, collections.Callable):
                 return reply_with()
             return reply_with
 

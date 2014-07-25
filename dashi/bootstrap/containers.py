@@ -79,14 +79,14 @@ class DictModifier(DotDict):
     def __getattr__(self, key):
         try:
             return DotDict.__getattr__(self, key)
-        except AttributeError, ae:
+        except AttributeError as ae:
             # Delegate to base
             return getattr(self.base, key)
 
     def __getitem__(self, key):
         try:
             return DotDict.__getitem__(self, key)
-        except KeyError, ke:
+        except KeyError as ke:
             # Delegate to base
             return getattr(self.base, key)
 
@@ -143,7 +143,7 @@ def named_any(name):
             trialname = '.'.join(moduleNames)
             try:
                 topLevelPackage = __import__(trialname)
-            except Exception, ex:
+            except Exception as ex:
                 moduleNames.pop()
         else:
             if len(names) == 1:
@@ -168,13 +168,13 @@ def for_name(modpath, classname):
 
 if __name__ == '__main__':
     dd = DotDict({'a':{'b':{'c':1, 'd':2}}})
-    print dd.a.b.c, dd.a.b.d
-    print dd.a.b
+    print(dd.a.b.c, dd.a.b.d)
+    print(dd.a.b)
     #print dd.foo
 
-    print dict.fromkeys(('a','b','c'), 'foo')
-    print DotDict.fromkeys(('a','b','c'), 'foo').a
+    print(dict.fromkeys(('a','b','c'), 'foo'))
+    print(DotDict.fromkeys(('a','b','c'), 'foo').a)
 
     dl = DotList([1, {'a':{'b':{'c':1, 'd':2}}}])
-    print dl[1].a.b.c
+    print(dl[1].a.b.c)
     

@@ -31,13 +31,13 @@ class HeartbeatService(object):
         gevent.spawn(self._beater).join()
 
     def subscribe(self, subscriber):
-        print "Got subscription: subscriber=%s" % subscriber
+        print("Got subscription: subscriber=%s" % subscriber)
         self.subscribers.append(subscriber)
         return True
 
     def _beater(self):
         while True:
-            n = self.counter.next()
+            n = next(self.counter)
             logging.debug("Beat %s", n)
             for subscriber in self.subscribers:
 
