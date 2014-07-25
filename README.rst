@@ -13,3 +13,4 @@ This is a simple python3 fork of the original `Dashi`_ project
 .. _`Kombu`: http://ask.github.com/kombu
 .. _`nova.rpc`: http://docs.openstack.org/developer/nova/devref/rpc.html
 .. _`Openstack Nova`: http://nova.openstack.org
+.. _`Dashi`: https://github.com/nimbusproject/dashi
