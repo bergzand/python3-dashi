@@ -5,7 +5,7 @@ import sys
 from threading import Thread
 from dashi import DashiConnection
 
-g_rabbit_url = ""
+g_rabbit_url = "amqp://localhost"
 
 
 class TalkConsole(object):
@@ -31,7 +31,7 @@ class DashiTalker(Thread):
         self.done = False
         self.exchange = "default_dashi_exchange"
         global g_rabbit_url
-        self.dashi = DashiConnection(self.name, g_rabbit_url, self.exchange, ssl=True)
+        self.dashi = DashiConnection(self.name, g_rabbit_url, self.exchange, ssl=False)
         self.subscribers = []
         self.console = console
         self.dashi.handle(self.new_joined_chat, "new_joined_chat")

@@ -350,7 +350,7 @@ class Dashi(object):
                         entity.revive(channel)
                 return channel
 
-            except (connection.connection_errors, IOError):
+            except connection.connection_errors + (IOError,):
                 if this_backoff is False:
                     log.exception("Error connecting to broker. Giving up.")
                     raise
@@ -384,11 +384,12 @@ class Dashi(object):
         """
         channel = None
         while 1:
+            print(connection)
             try:
                 if channel is None:
                     channel = connection.channel()
                 return func(channel, *args, **kwargs), channel
-            except (connection.connection_errors, IOError):
+            except connection.connection_errors + (IOError,):
                 self._call_errback()
 
             channel = self.connect(connection)
