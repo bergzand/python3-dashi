@@ -246,7 +246,7 @@ class Dashi(object):
 
             except socket.timeout:
                 pass
-            except (connection.connection_errors, IOError):
+            except connection.connection_errors + (IOError,):
                 log.debug("Received error consuming", exc_info=True)
                 self._call_errback()
                 reconnect = True
